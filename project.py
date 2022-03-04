@@ -44,13 +44,39 @@ def addStudents():
         print(i.__str__())
         # print(i.getFirstName())
 
+
+
+
 addStudents = staticmethod(addStudents)
 
+choosing = "choose"
+while choosing != "exit":
+    print("\n"+"HI THERE USER!" + "\n")
+    print("1- For declare your group name and add students.")
+    print("2- For add a subject.")
+    print("3- For add exams and degrees.")
+    print("4- For search on a degree.")
+    print("5- For change a mark.")
+    print("6- For exporting your file.")
+    print("7- End tasks." + "\n")
 
-# print(st1.getNumber())
-# print(st1.__str__())
+    choseNumber = 0
+    trying = "con"
+    while trying != "stp":
+        try:
+            choseNumber = int(input("Enter Here:"))
 
-addStudents()
+        except ValueError as Err:
+            print("Try to enter a number please: ")
+            trying = "con"
+        else:
+            break
+
+    if choseNumber == 1:
+        addStudents()
+    else:
+        print("Ended.")
+        break
 
 
 
