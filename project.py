@@ -8,7 +8,22 @@ class student:
     def __str__(self) -> str:
         return str(self.__number) + " | " + self.__firstName + " " + self.__lastName + " | " + str(self.__group) 
 
-st1 = student(1, "abdallah", "ismaili", 101)
+    def getNumber(self):
+        return self.__number
+
+    def getFirstName(self):
+        return self.__firstName
+
+    def getLastName(self):
+        return self.__lastName
+
+    def getGroup(self):
+        return self.__group
+
+
+
+st1 = student(1, "ABDAllah", "ISMAILI", "DD101")
+print(st1.getNumber())
 print(st1.__str__())
 
 
