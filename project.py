@@ -39,10 +39,14 @@ def addStudents():
         adding = input("add another student? (stp to stop): ")
         if adding != "stp":
             number += 1
+        else:
+            print("Your group have "+ str(number) +" students.")
 
+    groupStudents = open(group.upper(), "a")
     for i in st1.Students:
-        print(i.__str__())
-        # print(i.getFirstName())
+        groupStudents.write(str(i))
+        groupStudents.write("\n")
+        #print(i.__str__())
 
 
 
@@ -53,12 +57,13 @@ choosing = "choose"
 while choosing != "exit":
     print("\n"+"HI THERE USER!" + "\n")
     print("1- For declare your group name and add students.")
-    print("2- For add a subject.")
+    print("2- For add a new subject.")
     print("3- For add exams and degrees.")
     print("4- For search on a degree.")
     print("5- For change a mark.")
-    print("6- For exporting your file.")
-    print("7- End tasks." + "\n")
+    print("6- to add a new student.")
+    print("7- For exporting your file.")
+    print("8- End tasks." + "\n")
 
     choseNumber = 0
     trying = "con"
