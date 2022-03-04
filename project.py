@@ -1,4 +1,5 @@
 class student:
+    Students = []
     def __init__(self,number, firstName, lastName, group):
         self.__number = number
         self.__firstName = firstName
@@ -6,7 +7,7 @@ class student:
         self.__group = group
 
     def __str__(self) -> str:
-        return str(self.__number) + " | " + self.__firstName + " " + self.__lastName + " | " + str(self.__group) 
+        return str(self.__number) + " | " + self.__firstName + " " + self.__lastName + " | " + str(self.__group)
 
     def getNumber(self):
         return self.__number
@@ -20,19 +21,32 @@ class student:
     def getGroup(self):
         return self.__group
 
+
 def addStudents():
-    try:
-        number = int(input('The student special number: '))
+    print('ADD STUDENTS INFORMATIONS')
+    number = 1
+    st1 = ""
+    group = input("The group of your students: ")
+    print("here your group...: ", group.upper())
 
-    except ValueError as err:
-        print("Wrong character, enter a number.",err)
-        number = int(input('The student special number: '))
-    else:
-        firstName = input("the first name: ")
+    adding = "add"
+    while adding != "stp":
+        firstName = input("The first name of the student: ")
+        lastName = input("The last name of the student: ")
+
+        st1 = student(number, firstName.upper(), lastName.upper(), group.upper())
+        st1.Students.append(st1)
+        adding = input("add another student? (stp to stop): ")
+        if adding != "stp":
+            number += 1
+
+    for i in st1.Students:
+        print(i.__str__())
+        # print(i.getFirstName())
+
+addStudents = staticmethod(addStudents)
 
 
-
-# st1 = student(1, "ABDAllah", "ISMAILI", "DD101")
 # print(st1.getNumber())
 # print(st1.__str__())
 
