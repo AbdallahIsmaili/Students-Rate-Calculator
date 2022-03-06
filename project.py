@@ -24,7 +24,7 @@ class student:
 #/////////////////////////////////////////////////////////////////////////////////////////////
 
 import datetime
-
+import calendar
 class subject:
     Subjects = []
     def __init__(self,examNumber, subjectName, date, teacher, examType):
@@ -85,19 +85,20 @@ class subject:
         trying = "con"
         while trying != "stp":
             try:
-                day = int(input("Enter Exam day ..? : "))
+                month = int(input("Enter Exam month ..? : "))
             except ValueError as Err:
-                print("Please enter the exam day ...", Err)
+                print("Please enter the exam month ...", Err)
                 continue
             else:
+                print("\n" + calendar.month(year, month))
                 break
 
         trying = "con"
         while trying != "stp":
             try:
-                month = int(input("Enter Exam month ..? : "))
+                day = int(input("Enter Exam day ..? : "))
             except ValueError as Err:
-                print("Please enter the exam month ...", Err)
+                print("Please enter the exam day ...", Err)
                 continue
             else:
                 break
@@ -154,7 +155,7 @@ class subject:
                     break
 
         for i in subject.Subjects:
-            print(i.__str__())
+            print("\n" + i.__str__())
 
 
 
