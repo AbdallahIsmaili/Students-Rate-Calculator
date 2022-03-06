@@ -185,7 +185,7 @@ class subject:
         controlNote = ""
         studentFullName = ""
         for line in student.Students:
-            studentFullName = line.getFirstName() + " " + line.getLastName()
+            studentFullName = str(line.getNumber()) + " " + line.getFirstName() + " " + line.getLastName()
             print("\n" + studentFullName + " EXAMS NOTES.")
 
             for i in subject.Subjects:
@@ -230,7 +230,6 @@ class subject:
 
     def searchOnDegree(self):
         searchedGroup = input("Your student group: ")
-        #searchedName = input("Enter the student full name: ")
 
         searchedGroup = searchedGroup.upper()
         #print(student.Students)
@@ -241,6 +240,20 @@ class subject:
                 print(i)
             else:
                 print("There is no student.")
+
+        print("Choose The student by his number please.")
+        searchedNumber = int(input("Enter the student number: "))
+
+        searchedNumber = str(searchedNumber)
+        for i in subject.examList:
+            thisStudent = re.findall(str(searchedNumber), str(i))
+            number = str(thisStudent[0])
+            if str(number) == searchedNumber.strip():
+                print("Your result.")
+                print("\n" + i)
+            else:
+                print("There is no student with that number")
+
 
 
 
