@@ -21,6 +21,143 @@ class student:
     def getGroup(self):
         return self.__group
 
+#/////////////////////////////////////////////////////////////////////////////////////////////
+
+import datetime
+
+class subject:
+    Subjects = []
+    def __init__(self,examNumber, subjectName, date, teacher, examType):
+        self.__examNumber = examNumber
+        self.__subjectName = subjectName
+        self.__date = date
+        self.__teacher = teacher
+        self.__examType = examType
+
+    def __str__(self) -> str:
+        return self.__examType +" N." + str(self.__examNumber) + " | " + self.__subjectName + " at " + str(self.__date) + " ,By Mr." + self.__teacher
+
+    def getExamNumber(self):
+        return self.__examNumber
+
+    def getSubjectName(self):
+        return self.__subjectName
+
+    def getControlDate(self):
+        return self.__date
+
+    def getTeacherName(self):
+        return self.__teacher
+
+    def getExamType(self):
+        return self.__examType
+
+
+    def setExamNumber(self):
+        trying = "con"
+        while trying != "stp":
+            try:
+                self.__examNumber = int(input("Control number ..? : "))
+            except ValueError as Err:
+                print("Please enter a number ...", Err)
+                continue
+            else:
+                break
+
+    def setSubjectName(self):
+        trying = "con"
+        while trying != "stp":
+            try:
+                self.__subjectName = input("Subject name ..? : ")
+            except ValueError as Err:
+                print("Please enter your subject name ...", Err)
+                continue
+            else:
+                break
+
+        self.__subjectName = self.__subjectName.title()
+
+    def setControlDate(self):
+        year = datetime.datetime.now().year
+        day = 1
+        month = 1
+
+        trying = "con"
+        while trying != "stp":
+            try:
+                day = int(input("Enter Exam day ..? : "))
+            except ValueError as Err:
+                print("Please enter the exam day ...", Err)
+                continue
+            else:
+                break
+
+        trying = "con"
+        while trying != "stp":
+            try:
+                month = int(input("Enter Exam month ..? : "))
+            except ValueError as Err:
+                print("Please enter the exam month ...", Err)
+                continue
+            else:
+                break
+
+        self.__date = datetime.datetime(year, month, day).date()
+
+    def setTeacherName(self):
+        trying = "con"
+        while trying != "stp":
+            try:
+                self.__teacher = input("Professor name ..? : ")
+            except ValueError as Err:
+                print("Please enter the professor name ...", Err)
+                continue
+            else:
+                break
+
+    def setExamType(self):
+        trying = "con"
+        while trying != "stp":
+            try:
+                self.__examType = input("Exam Type (C 'Control', E 'EFM'..? : ")
+            except ValueError as Err:
+                print("Please enter your subject name ...", Err)
+                continue
+            else:
+                if self.__examType.upper() == "C":
+                    self.__examType = "ctrl"
+                    break
+                elif self.__examType.upper() == "E":
+                    self.__examType = "EFM"
+                    break
+
+    def createExam(self):
+        adding = "add"
+        while adding != "stp":
+            con = subject(1, "subjectName", "01-01-2022", "teacher", "type")
+
+            con.setExamType()
+            con.setExamNumber()
+            con.setSubjectName()
+            con.setControlDate()
+            con.setTeacherName()
+
+            trying = "con"
+            while trying != "stp":
+                try:
+                    adding = input("add another exam? (stp to stop):  ")
+                except ValueError as Err:
+                    print("Enter your choose (stp to stop / add to add another) :", Err)
+                    continue
+                else:
+                    subject.Subjects.append(con)
+                    break
+
+        for i in subject.Subjects:
+            print(i.__str__())
+
+
+
 
 def addStudents():
     print('ADD STUDENTS INFORMATIONS')
@@ -46,8 +183,6 @@ def addStudents():
     for i in st1.Students:
         groupStudents.write(str(i))
         groupStudents.write("\n")
-        #print(i.__str__())
-
 
 
 
@@ -58,12 +193,13 @@ while choosing != "exit":
     print("\n"+"HI THERE USER!" + "\n")
     print("1- For declare your group name and add students.")
     print("2- For add a new subject.")
-    print("3- For add exams and degrees.")
-    print("4- For search on a degree.")
-    print("5- For change a mark.")
-    print("6- to add a new student.")
-    print("7- For exporting your file.")
-    print("8- End tasks." + "\n")
+    print("3- For add exams and students degrees.")
+    print("4- For search on a student degree.")
+    print("5- For change a student mark.")
+    print("6- To add a new student.")
+    print("7- For calculate exams final marks.")
+    print("8- For exporting your file.")
+    print("9- End tasks." + "\n")
 
     choseNumber = 0
     trying = "con"
@@ -79,6 +215,10 @@ while choosing != "exit":
 
     if choseNumber == 1:
         addStudents()
+
+    elif choseNumber == 2:
+        con = subject(1, "subjectName", "01-01-2022", "teacher", "type")
+        con.createExam()
     else:
         print("Ended.")
         break
