@@ -120,7 +120,7 @@ class subject:
         trying = "con"
         while trying != "stp":
             try:
-                self.__examType = input("Exam Type (C 'Control', E 'EFM'..? : ")
+                self.__examType = input("Exam Type (C 'Control', E 'EFM'..? ) : ")
             except ValueError as Err:
                 print("Please enter your subject name ...", Err)
                 continue
@@ -131,6 +131,8 @@ class subject:
                 elif self.__examType.upper() == "E":
                     self.__examType = "EFM"
                     break
+                else:
+                    print("(C 'Control', E 'EFM'..? )")
 
     def createExam(self):
         adding = "add"
@@ -153,11 +155,18 @@ class subject:
                 else:
                     subject.Subjects.append(con)
                     break
-
+        
+        print("\n")
         for i in subject.Subjects:
-            print("\n" + i.__str__())
+            print(i.__str__())
 
+        controlFile = open("ConFile.txt", "a")
+        for i in subject.Subjects:
+            controlFile.write(i.__str__())
 
+    def studentsExams(self):
+        controls = len(subject.Subjects)
+        print(controls)
 
 
 def addStudents():
@@ -214,12 +223,15 @@ while choosing != "exit":
         else:
             break
 
+    con = subject(1, "subjectName", "01-01-2022", "teacher", "type")
     if choseNumber == 1:
         addStudents()
 
     elif choseNumber == 2:
-        con = subject(1, "subjectName", "01-01-2022", "teacher", "type")
         con.createExam()
+
+    elif choseNumber == 3:
+        con.studentsExams()
     else:
         print("Ended.")
         break
