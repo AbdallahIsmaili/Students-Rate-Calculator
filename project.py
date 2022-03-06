@@ -126,7 +126,7 @@ class subject:
                 continue
             else:
                 if self.__examType.upper() == "C":
-                    self.__examType = "ctrl"
+                    self.__examType = "Ctrl"
                     break
                 elif self.__examType.upper() == "E":
                     self.__examType = "EFM"
@@ -177,8 +177,46 @@ class subject:
     def studentsExams(self):
         controlsNumber = len(subject.Subjects)
         studentsNumber = len(student.Students)
-        print(controlsNumber)
-        print(studentsNumber)
+        examList = []
+
+        controlNote = ""
+        studentFullName = ""
+        for line in student.Students:
+            studentFullName = line.getFirstName() + " " + line.getLastName()
+            print("\n" + studentFullName + " EXAMS NOTES.")
+
+            for i in subject.Subjects:
+                theExam = i.getExamType() + ".N" + str(i.getExamNumber())
+
+                note = 1
+                while trying != "stp":
+                    try:
+                        note = float(input(theExam + " Note: "))
+                    except ValueError as Err:
+                        print("unavailable note ", Err)
+                        continue
+                    else:
+                        if i.getExamType() == "C" or i.getExamType() == "Ctrl":
+                            if note < 0 or note > 20:
+                                print("the note should be between 0 and 20.")
+                                continue
+                            else:
+                                break
+                        elif i.getExamType() == "E" or i.getExamType() == "EFM":
+                            if note < 0 or note > 40:
+                                print("the note should be between 0 and 40.")
+                                continue
+                            else:
+                                break
+
+                controlNote += theExam + " = " + str(note) + " | "
+
+            fullNote = str(studentFullName + " Notes: " + controlNote)
+            examList.append(fullNote)
+            controlNote = ''
+
+        for i in examList:
+            print(i)
 
 
 def addStudents():
