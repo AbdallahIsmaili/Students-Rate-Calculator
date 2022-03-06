@@ -1,3 +1,6 @@
+import re
+
+
 class student:
     Students = []
     def __init__(self,number, firstName, lastName, group):
@@ -27,6 +30,8 @@ import datetime
 import calendar
 class subject:
     Subjects = []
+    examList = []
+
     def __init__(self,examNumber, subjectName, date, teacher, examType):
         self.__examNumber = examNumber
         self.__subjectName = subjectName
@@ -170,14 +175,12 @@ class subject:
         for i in subject.Subjects:
             print(i.__str__())
 
-        controlFile = open("ConFile.txt", "a")
+        controlFile = open("Control.txt", "a")
         for i in subject.Subjects:
             controlFile.write(i.__str__())
+            controlFile.write('\n')
 
     def studentsExams(self):
-        controlsNumber = len(subject.Subjects)
-        studentsNumber = len(student.Students)
-        examList = []
 
         controlNote = ""
         studentFullName = ""
@@ -189,6 +192,7 @@ class subject:
                 theExam = i.getExamType() + ".N" + str(i.getExamNumber())
 
                 note = 1
+                trying = "con"
                 while trying != "stp":
                     try:
                         note = float(input(theExam + " Note: "))
@@ -212,11 +216,36 @@ class subject:
                 controlNote += theExam + " = " + str(note) + " | "
 
             fullNote = str(studentFullName + " Notes: " + controlNote)
-            examList.append(fullNote)
+            subject.examList.append(fullNote)
             controlNote = ''
 
-        for i in examList:
+        print("The marks you have added.. \n")
+        for i in subject.examList:
             print(i)
+
+        controlFile = open("Marks.txt", "a")
+        for i in subject.examList:
+            controlFile.write(i.__str__())
+            controlFile.write('\n')
+
+    def searchOnDegree(self):
+        searchedGroup = input("Your student group: ")
+        #searchedName = input("Enter the student full name: ")
+
+        searchedGroup = searchedGroup.upper()
+        #print(student.Students)
+        for i in student.Students:
+            thisStudent = re.findall("DD101", str(i))
+            group = ''.join(str(e) for e in thisStudent)
+            if str(group) == searchedGroup.strip():
+                print(i)
+            else:
+                print("There is no student.")
+
+
+
+
+
 
 
 def addStudents():
@@ -285,9 +314,11 @@ while choosing != "exit":
 
     elif choseNumber == 3:
         con.studentsExams()
+
+    elif choseNumber == 4:
+        con.searchOnDegree()
+
     else:
         print("Ended.")
         break
-
-
 
