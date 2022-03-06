@@ -132,18 +132,28 @@ class subject:
                     self.__examType = "EFM"
                     break
                 else:
-                    print("(C 'Control', E 'EFM'..? )")
+                    continue
 
     def createExam(self):
+        trying = "con"
+        while trying != "stp":
+            try:
+                self.__teacher = input("Professor name ..? : ")
+            except ValueError as Err:
+                print("Please enter the professor name ...", Err)
+                continue
+            else:
+                break
+
         adding = "add"
         while adding != "stp":
-            con = subject(1, "subjectName", "01-01-2022", "teacher", "type")
+            con = subject(0, "subjectName", "01-01-2022", self.__teacher, "type")
 
             con.setExamType()
             con.setExamNumber()
             con.setSubjectName()
             con.setControlDate()
-            con.setTeacherName()
+            #con.setTeacherName()
 
             trying = "con"
             while trying != "stp":
@@ -155,7 +165,7 @@ class subject:
                 else:
                     subject.Subjects.append(con)
                     break
-        
+
         print("\n")
         for i in subject.Subjects:
             print(i.__str__())
@@ -165,8 +175,10 @@ class subject:
             controlFile.write(i.__str__())
 
     def studentsExams(self):
-        controls = len(subject.Subjects)
-        print(controls)
+        controlsNumber = len(subject.Subjects)
+        studentsNumber = len(student.Students)
+        print(controlsNumber)
+        print(studentsNumber)
 
 
 def addStudents():
@@ -182,15 +194,18 @@ def addStudents():
         lastName = input("The last name of the student: ")
 
         st1 = student(number, firstName.upper(), lastName.upper(), group.upper())
-        st1.Students.append(st1)
+        student.Students.append(st1)
         adding = input("add another student? (stp to stop): ")
         if adding != "stp":
             number += 1
         else:
-            print("Your group have "+ str(number) +" students.")
+            print("Your group have " + str(number) + " students.")
+
+    for i in student.Students:
+        print(i.__str__())
 
     groupStudents = open(group.upper(), "a")
-    for i in st1.Students:
+    for i in student.Students:
         groupStudents.write(str(i))
         groupStudents.write("\n")
 
@@ -219,7 +234,7 @@ while choosing != "exit":
 
         except ValueError as Err:
             print("Try to enter a number please: ")
-            trying = "con"
+            continue
         else:
             break
 
