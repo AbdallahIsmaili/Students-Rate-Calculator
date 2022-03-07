@@ -1,6 +1,3 @@
-import re
-
-
 class student:
     Students = []
     def __init__(self,number, firstName, lastName, group):
@@ -28,9 +25,12 @@ class student:
 
 import datetime
 import calendar
+import re
+
 class subject:
     Subjects = []
     examList = []
+    mySearch = []
 
     def __init__(self,examNumber, subjectName, date, teacher, examType):
         self.__examNumber = examNumber
@@ -229,35 +229,115 @@ class subject:
             controlFile.write('\n')
 
     def searchOnDegree(self):
+
         searchedGroup = input("Your student group: ")
+        thisStudent = []
+        thoseStudents = []
 
         searchedGroup = searchedGroup.upper()
-        #print(student.Students)
+
         for i in student.Students:
             thisStudent = re.findall("DD101", str(i))
             group = ''.join(str(e) for e in thisStudent)
             if str(group) == searchedGroup.strip():
                 print(i)
+                thoseStudents.append(str(i))
             else:
                 print("There is no student.")
 
         print("Choose The student by his number please.")
         searchedNumber = int(input("Enter the student number: "))
 
-        searchedNumber = str(searchedNumber)
+
         for i in subject.examList:
-            thisStudent = re.findall(str(searchedNumber), str(i))
-            number = str(thisStudent[0])
-            if str(number) == searchedNumber.strip():
-                print("Your result.")
-                print("\n" + i)
+            if i[0] == str(searchedNumber):
+                print(i)
+
+    def changeDegree(self):
+
+        subject.searchOnDegree(self)
+
+        toChange = subject.mySearch
+        print(toChange)
+        trying = "on"
+        while trying != "off":
+
+            for i in range(0, len(toChange)):
+                result = re.findall("\d+\.\d+", str(toChange))
+                NumberOfCon = len(result)
+                print("\n")
+                print("The number of controls and EFM is: ", NumberOfCon)
+                print("Your Notes: " + ''.join(str(e + " ,  ") for e in result))
+                break
+            break
+
+        controlNote = ""
+        studentFullName = ""
+        for line in student.Students:
+            studentFullName = str(line.getNumber()) + " " + line.getFirstName() + " " + line.getLastName()
+        print("\n" + studentFullName + " NEW EXAMS NOTE PLEASE...!")
+
+        for i in subject.Subjects:
+            theExam = i.getExamType() + ".N" + str(i.getExamNumber())
+
+            note = 1
+            trying = "con"
+            while trying != "stp":
+                try:
+                    note = float(input(theExam + " Note: "))
+                except ValueError as Err:
+                    print("unavailable note ", Err)
+                    continue
+                else:
+                    if i.getExamType() == "C" or i.getExamType() == "Ctrl":
+                        if note < 0 or note > 20:
+                            print("the note should be between 0 and 20.")
+                            continue
+                        else:
+                            break
+                    elif i.getExamType() == "E" or i.getExamType() == "EFM":
+                        if note < 0 or note > 40:
+                            print("the note should be between 0 and 40.")
+                            continue
+                        else:
+                            break
+
+            controlNote += theExam + " = " + str(note) + " | "
+
+            fullNote = str(studentFullName + " Notes: " + controlNote)
+            subject.examList.append(fullNote)
+            controlNote = ''
+
+        print("\n The marks have been added.. \n")
+
+        print("     REMOVE THE OLD MARKS INFORMATION PLEASE! \n")
+        print(subject.examList)
+
+        print(subject.examList[0])
+        print("\n")
+        index = 0
+        trying = "con"
+        while trying != "stp":
+            try:
+                index = int(input("The old mark information index in the table is: \n choose between 1 and , " + str(len(subject.examList)) + ": "))
+                while index < 1 or index > len(subject.examList):
+                    index = int(input("Re enter the index please: \n should be among 1 and , " + str(
+                        len(subject.examList)) + ": "))
+                del subject.examList[index-1]
+
+            except ValueError as Err:
+                print("unavailable index ", Err)
+                continue
             else:
-                print("There is no student with that number")
+                break
 
+        for i in subject.examList:
+            print(i)
 
-
-
-
+        controlFile = open("Marks.txt", "a")
+        for i in subject.examList:
+            controlFile.write(i.__str__())
+            controlFile.write('\n')
 
 
 
@@ -279,7 +359,7 @@ def addStudents():
         if adding != "stp":
             number += 1
         else:
-            print("Your group have " + str(number) + " students.")
+            print("\n Your group have " + str(number) + " students.")
 
     for i in student.Students:
         print(i.__str__())
@@ -330,6 +410,9 @@ while choosing != "exit":
 
     elif choseNumber == 4:
         con.searchOnDegree()
+
+    elif choseNumber == 5:
+        con.changeDegree()
 
     else:
         print("Ended.")
