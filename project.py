@@ -91,7 +91,13 @@ class subject:
         while trying != "stp":
             try:
                 month = int(input("Enter Exam month ..? : "))
+                while month <= 0 or month >12:
+                    month = int(input("Enter Exam month ..? : "))
+
             except ValueError as Err:
+                print("Please enter the exam month ...", Err)
+                continue
+            except IndexError as Err:
                 print("Please enter the exam month ...", Err)
                 continue
             else:
@@ -102,7 +108,12 @@ class subject:
         while trying != "stp":
             try:
                 day = int(input("Enter Exam day ..? : "))
+                while day <= 0 or day >31:
+                    day = int(input("Enter Exam day ..? : "))
             except ValueError as Err:
+                print("Please enter the exam day ...", Err)
+                continue
+            except IndexError as Err:
                 print("Please enter the exam day ...", Err)
                 continue
             else:
@@ -158,7 +169,6 @@ class subject:
             con.setExamNumber()
             con.setSubjectName()
             con.setControlDate()
-            #con.setTeacherName()
 
             trying = "con"
             while trying != "stp":
@@ -180,10 +190,11 @@ class subject:
             controlFile.write(i.__str__())
             controlFile.write('\n')
 
+        controlFile.close()
+
     def studentsExams(self):
 
         controlNote = ""
-        studentFullName = ""
         for line in student.Students:
             studentFullName = str(line.getNumber()) + " " + line.getFirstName() + " " + line.getLastName()
             print("\n" + studentFullName + " EXAMS NOTES.")
@@ -227,6 +238,7 @@ class subject:
         for i in subject.examList:
             controlFile.write(i.__str__())
             controlFile.write('\n')
+        controlFile.close()
 
     def searchOnDegree(self):
 
@@ -337,6 +349,7 @@ class subject:
         for i in subject.examList:
             controlFile.write(i.__str__())
             controlFile.write('\n')
+        controlFile.close()
 
     ResultsList = []
     def calculateMarks(self):
@@ -374,6 +387,7 @@ class subject:
 
     def exportFile(self):
         resultFile = open("FinalMarks.txt", "a")
+
         for i in subject.ResultsList:
             resultFile.write(i + "\n")
 
@@ -454,15 +468,12 @@ while choosing != "exit":
 
     elif choseNumber == 6:
         con.calculateMarks()
-        
+
     elif choseNumber == 7:
         con.exportFile()
 
     else:
         print("Ended.")
         break
-
-
-
 
 
