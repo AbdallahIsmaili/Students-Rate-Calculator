@@ -339,32 +339,36 @@ class subject:
             controlFile.write('\n')
 
     def calculateMarks(self):
-        subject.searchOnDegree(self)
+        #subject.searchOnDegree(self)
 
-        toCalcule = subject.mySearch
-        calculeResult  = str(toCalcule)
+        #toCalcule = subject.mySearch
 
+        toCalcule = subject.examList
+
+        calculeResult  = ''.join(str(e + " ,  ") for e in toCalcule)
         print(calculeResult)
-        trying = "on"
-        moy = 0
-        while trying != "off":
-            for i in range(0, len(toCalcule)):
-                result = re.findall("\d+\.\d+", str(toCalcule))
 
-                som = 0
-                div = len(result)
+        for i in subject.examList:
+            trying = "on"
+            moy = 0
+            while trying != "off":
+                for j in range(0, len(toCalcule)):
+                    result = re.findall("\d+\.\d+", str(i))
 
-                for i in result:
-                    som += float(i)
-                moy = som / div
+                    som = 0
+                    div = len(result)
 
-                NumberOfCon = len(result)
-                print("\n")
-                print("The number of controls and EFM is: ", NumberOfCon)
-                print("Your Notes: " + ''.join(str(e + " ,  ") for e in result))
+                    for i in result:
+                        som += float(i)
+                    moy = som / div
+
+                    NumberOfCon = len(result)
+                    print("\n")
+                    print("The number of controls and EFM is: ", NumberOfCon)
+                    print("Your Notes: " + ''.join(str(e + " ,  ") for e in result))
+                    break
+                print(''.join(str(e + " ,  ") for e in i) + " | MODULE MOY: " + str(moy))
                 break
-            print(''.join(str(e + " ,  ") for e in calculeResult) + " | MODULE MOY: " + str(moy))
-            break
 
 
 def addStudents():
