@@ -231,7 +231,6 @@ class subject:
     def searchOnDegree(self):
 
         searchedGroup = input("Your student group: ")
-        thisStudent = []
         thoseStudents = []
 
         searchedGroup = searchedGroup.upper()
@@ -248,9 +247,9 @@ class subject:
         print("Choose The student by his number please.")
         searchedNumber = int(input("Enter the student number: "))
 
-
         for i in subject.examList:
             if i[0] == str(searchedNumber):
+                subject.mySearch.append(str(i))
                 print(i)
 
     def changeDegree(self):
@@ -339,6 +338,33 @@ class subject:
             controlFile.write(i.__str__())
             controlFile.write('\n')
 
+    def calculateMarks(self):
+        subject.searchOnDegree(self)
+
+        toCalcule = subject.mySearch
+        calculeResult  = str(toCalcule)
+
+        print(calculeResult)
+        trying = "on"
+        moy = 0
+        while trying != "off":
+            for i in range(0, len(toCalcule)):
+                result = re.findall("\d+\.\d+", str(toCalcule))
+
+                som = 0
+                div = len(result)
+
+                for i in result:
+                    som += float(i)
+                moy = som / div
+
+                NumberOfCon = len(result)
+                print("\n")
+                print("The number of controls and EFM is: ", NumberOfCon)
+                print("Your Notes: " + ''.join(str(e + " ,  ") for e in result))
+                break
+            print(''.join(str(e + " ,  ") for e in calculeResult) + " | MODULE MOY: " + str(moy))
+            break
 
 
 def addStudents():
@@ -381,10 +407,9 @@ while choosing != "exit":
     print("3- For add exams and students degrees.")
     print("4- For search on a student degree.")
     print("5- For change a student mark.")
-    print("6- To add a new student.")
-    print("7- For calculate exams final marks.")
-    print("8- For exporting your file.")
-    print("9- End tasks." + "\n")
+    print("6- For calculate exams final marks.")
+    print("7- For exporting your file.")
+    print("8- End tasks." + "\n")
 
     choseNumber = 0
     trying = "con"
@@ -414,7 +439,14 @@ while choosing != "exit":
     elif choseNumber == 5:
         con.changeDegree()
 
+    elif choseNumber == 6:
+        con.calculateMarks()
+
     else:
         print("Ended.")
         break
+
+
+
+
 
