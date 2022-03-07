@@ -338,20 +338,20 @@ class subject:
             controlFile.write(i.__str__())
             controlFile.write('\n')
 
+    ResultsList = []
     def calculateMarks(self):
-        #subject.searchOnDegree(self)
-
-        #toCalcule = subject.mySearch
 
         toCalcule = subject.examList
 
         calculeResult  = ''.join(str(e + " ,  ") for e in toCalcule)
-        print(calculeResult)
 
+        k = 0
         for i in subject.examList:
+
             trying = "on"
             moy = 0
             while trying != "off":
+
                 for j in range(0, len(toCalcule)):
                     result = re.findall("\d+\.\d+", str(i))
 
@@ -359,16 +359,22 @@ class subject:
                     div = len(result)
 
                     for i in result:
-                        som += float(i)
+                        if float(i) >= 0 and float(i) <= 20:
+                            som += float(i)
+                        else:
+                            som += (float(i)/2)
+
                     moy = som / div
 
                     NumberOfCon = len(result)
-                    print("\n")
-                    print("The number of controls and EFM is: ", NumberOfCon)
-                    print("Your Notes: " + ''.join(str(e + " ,  ") for e in result))
+                    k += 1
                     break
-                print(''.join(str(e + " ,  ") for e in i) + " | MODULE MOY: " + str(moy))
+                
+                fullMarks = str(subject.examList[k-1]) + " | MODULE MOY: " + str(moy)
+                print(fullMarks)
+                subject.ResultsList.append(fullMarks)
                 break
+
 
 
 def addStudents():
