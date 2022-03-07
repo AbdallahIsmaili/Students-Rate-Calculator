@@ -343,8 +343,6 @@ class subject:
 
         toCalcule = subject.examList
 
-        calculeResult  = ''.join(str(e + " ,  ") for e in toCalcule)
-
         k = 0
         for i in subject.examList:
 
@@ -366,15 +364,20 @@ class subject:
 
                     moy = som / div
 
-                    NumberOfCon = len(result)
                     k += 1
                     break
-                
+
                 fullMarks = str(subject.examList[k-1]) + " | MODULE MOY: " + str(moy)
                 print(fullMarks)
                 subject.ResultsList.append(fullMarks)
                 break
 
+    def exportFile(self):
+        resultFile = open("FinalMarks.txt", "a")
+        for i in subject.ResultsList:
+            resultFile.write(i + "\n")
+
+        resultFile.close()
 
 
 def addStudents():
@@ -451,6 +454,9 @@ while choosing != "exit":
 
     elif choseNumber == 6:
         con.calculateMarks()
+        
+    elif choseNumber == 7:
+        con.exportFile()
 
     else:
         print("Ended.")
